@@ -1,3 +1,7 @@
 [submodule "niagara"]
 	path = niagara
 	url = https://github.com/volkovasystems/niagara.git
+
+[submodule "delight"]
+	path = delight
+	url = https://github.com/seleporx/delight.git
