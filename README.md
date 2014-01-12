@@ -572,6 +572,9 @@ This will return the list of products grouped according to the price range. Note
 - Response body: *none*
 <br/><br/>
 
+#NEEDS SLEEP :(
+##WORK IN PROGRESS BEYOND THIS POINT...
+
 ###`/get/group/by/store`
 This will return the list of products grouped according to the grocery store only (excluding the location of the store). Note that this requires a near-location parameter.
 
