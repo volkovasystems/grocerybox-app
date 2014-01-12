@@ -268,6 +268,7 @@ This will return the list of products grouped according to the price range. Note
 					},
 					"products": [
 						{
+							"productUUID": "",
 							"productName": "",
 				            "productTitle": "",
 							"productDescription": "",
@@ -343,6 +344,7 @@ This will return the list of products grouped according to the price range. Note
 							},
 							"products": [
 								{
+									"productUUID": "",
 									"productName": "",
 						            "productTitle": "",
 									"productDescription": "",
@@ -422,6 +424,7 @@ This will return the list of products grouped according to the price range. Note
 							},
 							"products": [
 								{
+									"productUUID": "",
 									"productName": "",
 						            "productTitle": "",
 									"productDescription": "",
@@ -502,6 +505,7 @@ This will return the list of products grouped according to the price range. Note
 							},
 							"products": [
 								{
+									"productUUID": "",
 									"productName": "",
 						            "productTitle": "",
 									"productDescription": "",
@@ -585,11 +589,19 @@ This will return the list of products grouped according to the grocery store onl
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/categories`**
+- Path: **`/transaction-id/get/group/by/store`**
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
 	- **`limit-to`**
+	- **`location`**
+		- This the geo-location in the format of latitude, longitude. Example: `67.08765,56.7654`
+		- Usually, we would rather use the current `geoLocation` parameter handed over so this is optional unless the user wanted a specific location.
+	- **`wrap-as`**
+		- This can change the format of the response depending on how you will wrap the values.
+			- Possible values are:
+				- category
+				- section
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
 	- **`sessionID`**
@@ -602,26 +614,75 @@ This will return the list of products grouped according to the grocery store onl
 - Response code: **`200`**
 - Response body:
 
+		//Wrap as store objects.
 		{
 			"status": "success"|"failed",
 			"result": [
 		        {
-		            "name": "meat",
-		            "title": "Meat"
-		        },
-		        {
-		            "name": "beverage",
-		            "title": "Beverage"
-		        },
-		        {
-		            "name": "utensil",
-		            "title": "Utensil"
-		        },
-		        {
-		            "name": "dairy",
-		            "title": "Dairy"
-		        }
-		        ...
+					"storeName": "", 
+					"storeTitle": "",
+					"storeAddress": "",
+					"products": [
+						{
+							"productUUID": "",
+							"productName": "",
+				            "productTitle": "",
+							"productDescription": "",
+							"productThumbnailImage": "",
+							"productImage": [
+								"",
+								...
+							],
+							"productCategory": [
+								{
+									"categoryName": "",
+									"categoryTitle": ""
+								},
+								...
+							],
+							"productSection": [
+								{
+									"sectionName": "",
+									"sectionTitle": ""
+								},
+								...
+							],
+							"productGroup": [
+								{
+									"groupName": "",
+									"groupTitle": ""
+								},
+								...
+							],
+							"productStore": [
+								{
+									"storeName": "",
+									"storeTitle": "",
+									"storeAddress": "",
+									"productIdentifier": "",
+									"productPrice": 123.45,
+									"productQuantity": 1234
+								},
+								...
+							],
+							"productPrice": [
+								123.45,
+								... 
+							],
+							"productPackagingInformation": {
+								"packageClass": "",
+								"packageType": "",
+								"packageWeight": "",
+								"packageItemQuantity": 1234,
+								"expirationDate": 67876543213435786754,
+								"manufacturingDate": 2324567434343634543
+							},
+							"productTotalQuantity": 123456
+						},
+						...
+					]
+				},
+				...	
 			] | null
 		}
 
@@ -641,11 +702,16 @@ This will return the list of products grouped according to the category of the p
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/categories`**
-- MIME Type: **`application/json`** 
+- Path: **`/transaction-id/get/group/by/category`**
+- MIME Type: **`application/json`*
 - Accepted Request Query Parameters:
 	- **`order-by`**
 	- **`limit-to`**
+	- **`wrap-as`**
+		- This can change the format of the response depending on how you will wrap the values.
+			- Possible values are:
+				- store
+				- section
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
 	- **`sessionID`**
@@ -658,26 +724,74 @@ This will return the list of products grouped according to the category of the p
 - Response code: **`200`**
 - Response body:
 
+		//Wrap as category objects.
 		{
 			"status": "success"|"failed",
 			"result": [
 		        {
-		            "name": "meat",
-		            "title": "Meat"
-		        },
-		        {
-		            "name": "beverage",
-		            "title": "Beverage"
-		        },
-		        {
-		            "name": "utensil",
-		            "title": "Utensil"
-		        },
-		        {
-		            "name": "dairy",
-		            "title": "Dairy"
-		        }
-		        ...
+					"categoryName": "",
+					"categoryTitle": "",
+					"products": [
+						{
+							"productUUID": "",
+							"productName": "",
+				            "productTitle": "",
+							"productDescription": "",
+							"productThumbnailImage": "",
+							"productImage": [
+								"",
+								...
+							],
+							"productCategory": [
+								{
+									"categoryName": "",
+									"categoryTitle": ""
+								},
+								...
+							],
+							"productSection": [
+								{
+									"sectionName": "",
+									"sectionTitle": ""
+								},
+								...
+							],
+							"productGroup": [
+								{
+									"groupName": "",
+									"groupTitle": ""
+								},
+								...
+							],
+							"productStore": [
+								{
+									"storeName": "",
+									"storeTitle": "",
+									"storeAddress": "",
+									"productIdentifier": "",
+									"productPrice": 123.45,
+									"productQuantity": 1234
+								},
+								...
+							],
+							"productPrice": [
+								123.45,
+								... 
+							],
+							"productPackagingInformation": {
+								"packageClass": "",
+								"packageType": "",
+								"packageWeight": "",
+								"packageItemQuantity": 1234,
+								"expirationDate": 67876543213435786754,
+								"manufacturingDate": 2324567434343634543
+							},
+							"productTotalQuantity": 123456
+						},
+						...
+					]
+				},
+				...	
 			] | null
 		}
 
@@ -697,11 +811,16 @@ This will return the list of products grouped according to the section or usage 
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/categories`**
+- Path: **`/transaction-id/get/group/by/section`**
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
 	- **`limit-to`**
+	- **`wrap-as`**
+		- This can change the format of the response depending on how you will wrap the values.
+			- Possible values are:
+				- store
+				- category
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
 	- **`sessionID`**
@@ -714,26 +833,74 @@ This will return the list of products grouped according to the section or usage 
 - Response code: **`200`**
 - Response body:
 
+		//Wrap as section objects.
 		{
 			"status": "success"|"failed",
 			"result": [
 		        {
-		            "name": "meat",
-		            "title": "Meat"
-		        },
-		        {
-		            "name": "beverage",
-		            "title": "Beverage"
-		        },
-		        {
-		            "name": "utensil",
-		            "title": "Utensil"
-		        },
-		        {
-		            "name": "dairy",
-		            "title": "Dairy"
-		        }
-		        ...
+					"sectionName": "",
+					"sectionTitle": "",
+					"products": [
+						{
+							"productUUID": "",
+							"productName": "",
+				            "productTitle": "",
+							"productDescription": "",
+							"productThumbnailImage": "",
+							"productImage": [
+								"",
+								...
+							],
+							"productCategory": [
+								{
+									"categoryName": "",
+									"categoryTitle": ""
+								},
+								...
+							],
+							"productSection": [
+								{
+									"sectionName": "",
+									"sectionTitle": ""
+								},
+								...
+							],
+							"productGroup": [
+								{
+									"groupName": "",
+									"groupTitle": ""
+								},
+								...
+							],
+							"productStore": [
+								{
+									"storeName": "",
+									"storeTitle": "",
+									"storeAddress": "",
+									"productIdentifier": "",
+									"productPrice": 123.45,
+									"productQuantity": 1234
+								},
+								...
+							],
+							"productPrice": [
+								123.45,
+								... 
+							],
+							"productPackagingInformation": {
+								"packageClass": "",
+								"packageType": "",
+								"packageWeight": "",
+								"packageItemQuantity": 1234,
+								"expirationDate": 67876543213435786754,
+								"manufacturingDate": 2324567434343634543
+							},
+							"productTotalQuantity": 123456
+						},
+						...
+					]
+				},
+				...	
 			] | null
 		}
 
@@ -743,7 +910,7 @@ This will return the list of products grouped according to the section or usage 
 - Response body: *none*
 <br/><br/>
 
-###`/get/products/under/group/group-name`
+###`/get/product/all/under/group/group-name`
 This will return the list of products grouped under the given group name.
 
 **Request Format**
@@ -753,7 +920,7 @@ This will return the list of products grouped under the given group name.
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/categories`**
+- Path: **`/transaction-id/get/product/all/under/group/group-name`**
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
@@ -773,22 +940,7 @@ This will return the list of products grouped under the given group name.
 		{
 			"status": "success"|"failed",
 			"result": [
-		        {
-		            "name": "meat",
-		            "title": "Meat"
-		        },
-		        {
-		            "name": "beverage",
-		            "title": "Beverage"
-		        },
-		        {
-		            "name": "utensil",
-		            "title": "Utensil"
-		        },
-		        {
-		            "name": "dairy",
-		            "title": "Dairy"
-		        }
+		        
 		        ...
 			] | null
 		}
@@ -799,7 +951,7 @@ This will return the list of products grouped under the given group name.
 - Response body: *none*
 <br/><br/>
 
-###`/get/products/under/category/category-name`
+###`/get/product/all/under/category/category-name`
 This will return the list of products categorized under the given category name.
 
 **Request Format**
@@ -809,7 +961,7 @@ This will return the list of products categorized under the given category name.
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/categories`**
+- Path: **`/transaction-id/get/product/all/under/category/category-name`**
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
@@ -829,22 +981,7 @@ This will return the list of products categorized under the given category name.
 		{
 			"status": "success"|"failed",
 			"result": [
-		        {
-		            "name": "meat",
-		            "title": "Meat"
-		        },
-		        {
-		            "name": "beverage",
-		            "title": "Beverage"
-		        },
-		        {
-		            "name": "utensil",
-		            "title": "Utensil"
-		        },
-		        {
-		            "name": "dairy",
-		            "title": "Dairy"
-		        }
+		        
 		        ...
 			] | null
 		}
@@ -855,7 +992,7 @@ This will return the list of products categorized under the given category name.
 - Response body: *none*
 <br/><br/>
 
-###`/get/products/under/section/section-name`
+###`/get/product/all/under/section/section-name`
 This will return the list of products sectioned under the given section name.
 
 **Request Format**
@@ -865,7 +1002,7 @@ This will return the list of products sectioned under the given section name.
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/categories`**
+- Path: **`/transaction-id/get/product/all/under/section/section-name`**
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
@@ -885,22 +1022,7 @@ This will return the list of products sectioned under the given section name.
 		{
 			"status": "success"|"failed",
 			"result": [
-		        {
-		            "name": "meat",
-		            "title": "Meat"
-		        },
-		        {
-		            "name": "beverage",
-		            "title": "Beverage"
-		        },
-		        {
-		            "name": "utensil",
-		            "title": "Utensil"
-		        },
-		        {
-		            "name": "dairy",
-		            "title": "Dairy"
-		        }
+		        
 		        ...
 			] | null
 		}
@@ -911,7 +1033,7 @@ This will return the list of products sectioned under the given section name.
 - Response body: *none*
 <br/><br/>
 
-###`/get/products/with/price/ranging`
+###`/get/product/all/with/price/ranging`
 This will return the list of products based on the given price range.
 
 **Request Format**
@@ -921,7 +1043,7 @@ This will return the list of products based on the given price range.
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/categories`**
+- Path: **`/transaction-id/get/product/all/with/price/ranging`**
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
@@ -941,22 +1063,180 @@ This will return the list of products based on the given price range.
 		{
 			"status": "success"|"failed",
 			"result": [
-		        {
-		            "name": "meat",
-		            "title": "Meat"
-		        },
-		        {
-		            "name": "beverage",
-		            "title": "Beverage"
-		        },
-		        {
-		            "name": "utensil",
-		            "title": "Utensil"
-		        },
-		        {
-		            "name": "dairy",
-		            "title": "Dairy"
-		        }
+		        
+		        ...
+			] | null
+		}
+
+*On server error response*:
+
+- Response code: **`404/500`**
+- Response body: *none*
+<br/><br/>
+
+###`/get/product/product-uuid`
+This will return the complete information about the product.
+
+**Request Format**
+
+- Method: **`GET`**
+- Host: **`data.grocerybox.com`**
+- Port: 
+- Protocol: **`HTTPS`**
+- Encoding: **`UTF8`**
+- Path: **`/transaction-id/get/product/product-uuid`**
+- MIME Type: **`application/json`** 
+- Accepted Request Query Parameters:
+	- **`order-by`**
+	- **`limit-to`**
+- Accepted Request Body Parameters:
+	- **`geoLocation`**
+	- **`sessionID`**
+	- **`requestTimestamp`**
+
+**Response Format**
+
+*On normal response*:
+
+- Response code: **`200`**
+- Response body:
+
+		{
+			"status": "success"|"failed",
+			"result": [
+		        
+		        ...
+			] | null
+		}
+
+*On server error response*:
+
+- Response code: **`404/500`**
+- Response body: *none*
+<br/><br/>
+
+
+###`/get/product/product-uuid/product-data-property`
+This will return the specific value of the given property in the complete product information.
+
+**Request Format**
+
+- Method: **`GET`**
+- Host: **`data.grocerybox.com`**
+- Port: 
+- Protocol: **`HTTPS`**
+- Encoding: **`UTF8`**
+- Path: **`/transaction-id/get/product/product-uuid/product-data-property`**
+- MIME Type: **`application/json`** 
+- Accepted Request Query Parameters:
+	- **`order-by`**
+	- **`limit-to`**
+- Accepted Request Body Parameters:
+	- **`geoLocation`**
+	- **`sessionID`**
+	- **`requestTimestamp`**
+
+**Response Format**
+
+*On normal response*:
+
+- Response code: **`200`**
+- Response body:
+
+		{
+			"status": "success"|"failed",
+			"result": [
+		        
+		        ...
+			] | null
+		}
+
+*On server error response*:
+
+- Response code: **`404/500`**
+- Response body: *none*
+<br/><br/>
+
+
+###`/get/store/store-name`
+This will return the information of all the stores with the given name. Because a specific location like a city can have one or more similar stores but in different branches.
+
+**Request Format**
+
+- Method: **`GET`**
+- Host: **`data.grocerybox.com`**
+- Port: 
+- Protocol: **`HTTPS`**
+- Encoding: **`UTF8`**
+- Path: **`/transaction-id/get/store/store-name`**
+- MIME Type: **`application/json`** 
+- Accepted Request Query Parameters:
+	- **`order-by`**
+	- **`limit-to`**
+	- **`location`**
+		- This the geo-location in the format of latitude, longitude. Example: `67.08765,56.7654`
+		- Usually, we would rather use the current `geoLocation` parameter handed over so this is optional unless the user wanted a specific location.
+- Accepted Request Body Parameters:
+	- **`geoLocation`**
+	- **`sessionID`**
+	- **`requestTimestamp`**
+
+**Response Format**
+
+*On normal response*:
+
+- Response code: **`200`**
+- Response body:
+
+		{
+			"status": "success"|"failed",
+			"result": [
+		        
+		        ...
+			] | null
+		}
+
+*On server error response*:
+
+- Response code: **`404/500`**
+- Response body: *none*
+<br/><br/>
+
+
+###`/get/store/store-name/store-data-property`
+This will return the value of the given property in the complete store information.
+
+**Request Format**
+
+- Method: **`GET`**
+- Host: **`data.grocerybox.com`**
+- Port: 
+- Protocol: **`HTTPS`**
+- Encoding: **`UTF8`**
+- Path: **`/transaction-id/get/store-name/store-data-property`**
+- MIME Type: **`application/json`** 
+- Accepted Request Query Parameters:
+	- **`order-by`**
+	- **`limit-to`**
+	- **`location`**
+		- This the geo-location in the format of latitude, longitude. Example: `67.08765,56.7654`
+		- Usually, we would rather use the current `geoLocation` parameter handed over so this is optional unless the user wanted a specific location.
+- Accepted Request Body Parameters:
+	- **`geoLocation`**
+	- **`sessionID`**
+	- **`requestTimestamp`**
+
+**Response Format**
+
+*On normal response*:
+
+- Response code: **`200`**
+- Response body:
+
+		{
+			"status": "success"|"failed",
+			"result": [
+		        
 		        ...
 			] | null
 		}
