@@ -212,7 +212,7 @@ This will return the list of products grouped according to the price range. Note
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/categories`**
+- Path: **`/transaction-id/get/group/by/price-range`**
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
