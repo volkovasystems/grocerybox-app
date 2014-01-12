@@ -35,7 +35,7 @@ The transaction ID will act as a gateway thus this will prevent unwanted request
 
 ##Draft REST API Specifications
 
-###`/get/groups`
+###`/get/group/all`
 This will return the list of groups of products.
 
 **Request Format**
@@ -45,7 +45,7 @@ This will return the list of groups of products.
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/groups`**
+- Path: **`/transaction-id/get/group/all`**
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
@@ -66,20 +66,20 @@ This will return the list of groups of products.
 			"status": "success"|"failed",
 			"result": [
 				{
-					"name": "price-range",
-					"title": "Price Range"
+					"groupName": "price-range",
+					"groupTitle": "Price Range"
 				},
 				{
-					"name": "store",
-					"title": "Store"
+					"groupName": "store",
+					"groupTitle": "Store"
 				},
 				{
-					"name": "category",
-					"title": "Category"
+					"groupName": "category",
+					"groupTitle": "Category"
 				},
 				{
-					"name": "section",
-					"title": "Section"
+					"groupName": "section",
+					"groupTitle": "Section"
 				}
 			] | null
 		}
@@ -90,7 +90,7 @@ This will return the list of groups of products.
 - Response body: *none*
 <br/><br/>
 
-###`/get/categories`
+###`/get/category/all`
 This will return the list of categories of products.
 
 **Request Format**
@@ -100,7 +100,7 @@ This will return the list of categories of products.
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/categories`**
+- Path: **`/transaction-id/get/category/all`**
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
@@ -121,20 +121,20 @@ This will return the list of categories of products.
 			"status": "success"|"failed",
 			"result": [
 		        {
-		            "name": "meat",
-		            "title": "Meat"
+		            "categoryName": "meat",
+		            "categoryTitle": "Meat"
 		        },
 		        {
-		            "name": "beverage",
-		            "title": "Beverage"
+		            "categoryName": "beverage",
+		            "categoryTitle": "Beverage"
 		        },
 		        {
-		            "name": "utensil",
-		            "title": "Utensil"
+		            "categoryName": "utensil",
+		            "categoryTitle": "Utensil"
 		        },
 		        {
-		            "name": "dairy",
-		            "title": "Dairy"
+		            "categoryName": "dairy",
+		            "categoryTitle": "Dairy"
 		        }
 		        ...
 			] | null
@@ -146,7 +146,7 @@ This will return the list of categories of products.
 - Response body: *none*
 <br/><br/>
 
-###`/get/sections`
+###`/get/section/all`
 This will return the list of sections of products. Products grouped by sections will return products under a specific usage. Like if it used for breakfast, house cleaning, house decorations etc.
 
 **Request Format**
@@ -156,7 +156,7 @@ This will return the list of sections of products. Products grouped by sections 
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/categories`**
+- Path: **`/transaction-id/get/section/all`**
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
@@ -177,20 +177,20 @@ This will return the list of sections of products. Products grouped by sections 
 			"status": "success"|"failed",
 			"result": [
 				{
-					"name": "household-cleaning", 
-					"title": "Meat"
+					"sectionName": "household-cleaning", 
+					"sectionTitle": "Household Cleaning"
 				},
 				{
-					"name": "food",
-					"title": "Food"
+					"sectionName": "food",
+					"sectionTitle": "Food"
 				},
 				{
-					"name": "breakfast",
-					"title": "Breakfast"
+					"sectionName": "breakfast",
+					"sectionTitle": "Breakfast"
 				},
 				{
-					"name": "party-wines",
-					"title": "Party Wines"
+					"sectionName": "party-wines",
+					"sectionTitle": "Party Wines"
 				}
 				...
 			] | null
@@ -223,8 +223,13 @@ This will return the list of products grouped according to the price range. Note
 		- This is used for single price range group. Requires the minimum price range.
 	- **`to`**
 		- This is used for single price range group. Requires the maximum price range. 
-	- wrap-as
+	- **`wrap-as`**
 		- This can change the format of the response depending on how you will wrap the values.
+		- Possible values are:
+			- product
+			- category
+			- section
+			- store
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
 	- **`sessionID`**
@@ -241,7 +246,7 @@ This will return the list of products grouped according to the price range. Note
 						"minimumPrice": 10.45,
 						"maximumPrice": 30.55
 					}
-	`				...
+					...
 				]
  
 
@@ -251,27 +256,313 @@ This will return the list of products grouped according to the price range. Note
 
 - Response code: **`200`**
 - Response body:
-
+		
+		//Wrap as product objects.
 		{
 			"status": "success"|"failed",
 			"result": [
 		        {
-		            "name": "meat",
-		            "title": "Meat"
-		        },
-		        {
-		            "name": "beverage",
-		            "title": "Beverage"
-		        },
-		        {
-		            "name": "utensil",
-		            "title": "Utensil"
-		        },
-		        {
-		            "name": "dairy",
-		            "title": "Dairy"
+					"priceRange": {
+						"minimumPrice": 12.50,
+						"maximumPrice": 100.45
+					},
+					"products": [
+						{
+							"productName": "",
+				            "productTitle": "",
+							"productDescription": "",
+							"productThumbnailImage": "",
+							"productImage": [
+								"",
+								...
+							],
+							"productCategory": [
+								{
+									"categoryName": "",
+									"categoryTitle": ""
+								},
+								...
+							],
+							"productSection": [
+								{
+									"sectionName": "",
+									"sectionTitle": ""
+								},
+								...
+							],
+							"productGroup": [
+								{
+									"groupName": "",
+									"groupTitle": ""
+								},
+								...
+							],
+							"productStore": [
+								{
+									"storeName": "",
+									"storeTitle": "",
+									"storeAddress": "",
+									"productIdentifier": "",
+									"productPrice": 123.45,
+									"productQuantity": 1234
+								},
+								...
+							],
+							"productPrice": [
+								123.45,
+								... 
+							],
+							"productPackagingInformation": {
+								"packageClass": "",
+								"packageType": "",
+								"packageWeight": "",
+								"packageItemQuantity": 1234,
+								"expirationDate": 67876543213435786754,
+								"manufacturingDate": 2324567434343634543
+							},
+							"productTotalQuantity": 123456
+						}
+					]
 		        }
 		        ...
+			] | null
+		}
+
+		//Wrap as category objects.
+		{
+			"status": "success"|"failed",
+			"result": [
+		        {
+					"categoryName": "",
+					"categoryTitle": "",
+					"products": [
+						{
+							"priceRange": {
+								"minimumPrice": 12.50,
+								"maximumPrice": 100.45
+							},
+							"products": [
+								{
+									"productName": "",
+						            "productTitle": "",
+									"productDescription": "",
+									"productThumbnailImage": "",
+									"productImage": [
+										"",
+										...
+									],
+									"productCategory": [
+										{
+											"categoryName": "",
+											"categoryTitle": ""
+										},
+										...
+									],
+									"productSection": [
+										{
+											"sectionName": "",
+											"sectionTitle": ""
+										},
+										...
+									],
+									"productGroup": [
+										{
+											"groupName": "",
+											"groupTitle": ""
+										},
+										...
+									],
+									"productStore": [
+										{
+											"storeName": "",
+											"storeTitle": "",
+											"storeAddress": "",
+											"productIdentifier": "",
+											"productPrice": 123.45,
+											"productQuantity": 1234
+										},
+										...
+									],
+									"productPrice": [
+										123.45,
+										... 
+									],
+									"productPackagingInformation": {
+										"packageClass": "",
+										"packageType": "",
+										"packageWeight": "",
+										"packageItemQuantity": 1234,
+										"expirationDate": 67876543213435786754,
+										"manufacturingDate": 2324567434343634543
+									},
+									"productTotalQuantity": 123456
+								},
+								...
+							]
+				        },
+				        ...
+					]
+				},
+				...	
+			] | null
+		}
+
+		//Wrap as section objects.
+		{
+			"status": "success"|"failed",
+			"result": [
+		        {
+					"sectionName": "",
+					"sectionTitle": "",
+					"products": [
+						{
+							"priceRange": {
+								"minimumPrice": 12.50,
+								"maximumPrice": 100.45
+							},
+							"products": [
+								{
+									"productName": "",
+						            "productTitle": "",
+									"productDescription": "",
+									"productThumbnailImage": "",
+									"productImage": [
+										"",
+										...
+									],
+									"productCategory": [
+										{
+											"categoryName": "",
+											"categoryTitle": ""
+										},
+										...
+									],
+									"productSection": [
+										{
+											"sectionName": "",
+											"sectionTitle": ""
+										},
+										...
+									],
+									"productGroup": [
+										{
+											"groupName": "",
+											"groupTitle": ""
+										},
+										...
+									],
+									"productStore": [
+										{
+											"storeName": "",
+											"storeTitle": "",
+											"storeAddress": "",
+											"productIdentifier": "",
+											"productPrice": 123.45,
+											"productQuantity": 1234
+										},
+										...
+									],
+									"productPrice": [
+										123.45,
+										... 
+									],
+									"productPackagingInformation": {
+										"packageClass": "",
+										"packageType": "",
+										"packageWeight": "",
+										"packageItemQuantity": 1234,
+										"expirationDate": 67876543213435786754,
+										"manufacturingDate": 2324567434343634543
+									},
+									"productTotalQuantity": 123456
+								},
+								...
+							]
+				        },
+				        ...
+					]
+				},
+				...	
+			] | null
+		}
+
+		//Wrap as store objects.
+		{
+			"status": "success"|"failed",
+			"result": [
+		        {
+					"storeName": "", 
+					"storeTitle": "",
+					"storeAddress": "",
+					"products": [
+						{
+							"priceRange": {
+								"minimumPrice": 12.50,
+								"maximumPrice": 100.45
+							},
+							"products": [
+								{
+									"productName": "",
+						            "productTitle": "",
+									"productDescription": "",
+									"productThumbnailImage": "",
+									"productImage": [
+										"",
+										...
+									],
+									"productCategory": [
+										{
+											"categoryName": "",
+											"categoryTitle": ""
+										},
+										...
+									],
+									"productSection": [
+										{
+											"sectionName": "",
+											"sectionTitle": ""
+										},
+										...
+									],
+									"productGroup": [
+										{
+											"groupName": "",
+											"groupTitle": ""
+										},
+										...
+									],
+									"productStore": [
+										{
+											"storeName": "",
+											"storeTitle": "",
+											"storeAddress": "",
+											"productIdentifier": "",
+											"productPrice": 123.45,
+											"productQuantity": 1234
+										},
+										...
+									],
+									"productPrice": [
+										123.45,
+										... 
+									],
+									"productPackagingInformation": {
+										"packageClass": "",
+										"packageType": "",
+										"packageWeight": "",
+										"packageItemQuantity": 1234,
+										"expirationDate": 67876543213435786754,
+										"manufacturingDate": 2324567434343634543
+									},
+									"productTotalQuantity": 123456
+								},
+								...
+							]
+				        },
+				        ...
+					]
+				},
+				...	
 			] | null
 		}
 
@@ -617,7 +908,7 @@ This will return the list of products sectioned under the given section name.
 - Response body: *none*
 <br/><br/>
 
-###`/get/products/with/price/ranging?from=minimum-price&to=maximum-price`
+###`/get/products/with/price/ranging`
 This will return the list of products based on the given price range.
 
 **Request Format**
