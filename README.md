@@ -37,55 +37,57 @@ The transaction ID will act as a gateway thus this will prevent unwanted request
 
 ###/get/groups
 This will return the list of groups of products.
->**Request Format**
-> 
-> 	Method: 		GET
-> 	Host: 			data.grocerybox.com
-> 	Port: 
-> 	Protocol: 		HTTPS
-> 	Encoding: 		UTF8
-> 	Path: 			/transaction-id/get/groups
-> 	MIME Type: 		application/json
-> 	Accepted Request Header Parameters
-> 	- 
-> 	Accepted Request Query Parameters
-> 	- order-by
-> 	- limit-to
-> 	Accepted Request Body Parameters
-> 	- geoLocation
-> 	- sessionID
-> 	- requestTimestamp
 
->**Response Format**
-> 
-> 	On normal response:
-> 	Response code: 200
-> 	Response body:
-> 	{
-> 		"status": "success"|"failed",
-> 		"result": [
-> 			{
-> 				"name": "price-range",
-> 				"title": "Price Range"
-> 			},
-> 			{
-> 				"name": "store",
-> 				"title": "Store"
-> 			},
-> 			{
-> 				"name": "category",
-> 				"title": "Category"
-> 			},
-> 			{
-> 				"name": "section",
-> 				"title": "Section"
-> 			}
-> 		] | null
-> 	}
-> 	
-> 	On server error response:
-> 	Response code: 404/500
-> 	Response body: none
+**Request Format**
+
+- Method: **`GET`**
+- Host: **`data.grocerybox.com`**
+- Port: 
+- Protocol: **`HTTPS`**
+- Encoding: **`UTF8`**
+- Path: **`/transaction-id/get/groups`**
+- MIME Type: **`application/json`** 
+- Accepted Request Query Parameters
+	- **`order-by`**
+	- **`limit-to`**
+- Accepted Request Body Parameters
+	- **`geoLocation`**
+	- **`sessionID`**
+	- **`requestTimestamp`**
+
+**Response Format**
+
+*On normal response*:
+
+- Response code: **`200`**
+- Response body:
+
+		{
+			"status": "success"|"failed",
+			"result": [
+				{
+					"name": "price-range",
+					"title": "Price Range"
+				},
+				{
+					"name": "store",
+					"title": "Store"
+				},
+				{
+					"name": "category",
+					"title": "Category"
+				},
+				{
+					"name": "section",
+					"title": "Section"
+				}
+			] | null
+		}
+
+*On server error response*:
+
+- Response code: **`404/500`**
+- Response body: *none*
 
 
 ###/get/categories
