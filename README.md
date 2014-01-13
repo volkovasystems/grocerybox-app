@@ -40,8 +40,8 @@ The REST API follows a transactional based command endpoints. The endpoints are 
 > 
 > - By practice we will be using lowercase for query parameters and camelcase for request body parameters.
 > - All request body parameters should be in JSON format.
-> - A response code of **`404`** means the server encounters an error but does not crash. A response code of **`500`** means the server encounters an error and crashes.
-> - Response format will always follow strict structure and should only contain two properties, **`status`** and **`results`**. **`status`** should only have two values, **`"success"`** or **`"failed"`**
+> - A response code of **`404`** means the server encounters an error but does not crash. A response code of __`500`__ means the server encounters an error and crashes.
+> - Response format will always follow strict structure and should only contain two properties, **`status`** and __`results`__. **`status`** should only have two values, __`"success"`__ or **`"failed"`**
 
 ###`/get/group/all`
 This will return the list of groups of products.
