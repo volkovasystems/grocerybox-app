@@ -34,6 +34,7 @@ The transaction ID will act as a gateway thus this will prevent unwanted request
 
 
 ##Draft REST API Specifications
+The REST API follows a transactional based command endpoints. The endpoints are designed like a functional call with the request parameters acting like function parameters. This pattern ensures that the endpoints follows separation of concern and modularity principles.
 
 ###`/get/group/all`
 This will return the list of groups of products.
