@@ -40,8 +40,8 @@ The REST API follows a transactional based command endpoints. The endpoints are 
 > 
 > - By practice we will be using lowercase for query parameters and camelcase for request body parameters.
 > - All request body parameters should be in JSON format.
-> - A response code of **`404`** means the server encounters an error but does not crash. A response code of __`500`__ means the server encounters an error and crashes.
-> - Response format will always follow strict structure and should only contain two properties, **`status`** and __`results`__. **`status`** should only have two values, __`"success"`__ or **`"failed"`**
+> - A response code of <strong>`404`</strong> means the server encounters an error but does not crash. A response code of <strong>`500`</strong> means the server encounters an error and crashes.
+> - Response format will always follow strict structure and should only contain two properties, <strong>`status`</strong> and <strong>`results`</strong>. <strong>`status`</strong> should only have two values, <strong>`"success"`</strong> or <strong>`"failed"`</strong>
 
 ###`/get/group/all`
 This will return the list of groups of products.
@@ -64,7 +64,7 @@ This will return the list of groups of products.
 		- The default is by **`groupUUID`**.
 	- **`limit-to`**
 		- Limits the result based on the given value.
-		- Minimum of **`1`** and maximum of **`N`** where **`N`** is the maximum group items in the database.
+		- Minimum of **`1`** and maximum of <strong>`N`</strong> where <strong>`N`</strong> is the maximum group items in the database.
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
 	- **`sessionID`**
@@ -131,7 +131,7 @@ This will return the list of categories of products.
 	- **`go-to-page`**
 		- Combined together with **`limitTo`**.
 		- Sets the current page of the results.
-		- Page will start at **`1`** and end at **`Math.floor(1/N)`** where **`N`** is the maximum number of category in the database.
+		- Page will start at **`1`** and end at <strong>`Math.floor(1/N)`</strong> where <strong>`N`</strong> is the maximum number of category in the database.
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
 	- **`sessionID`**
