@@ -50,7 +50,14 @@ This will return the list of groups of products.
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
+		- This will arrange the results based on the given value.
+		- Possible values are:
+			- **`name`**
+			- **`title`** 
+		- The default is by **`groupUUID`**.
 	- **`limit-to`**
+		- Limits the result based on the given value.
+		- Minimum of **`1`** and maximum of **`N`** where **`N`** is the maximum group items in the database.
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
 	- **`sessionID`**
@@ -105,6 +112,11 @@ This will return the list of categories of products.
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
+		- This will arrange the results based on the given value.
+		- Possible values are:
+			- **`name`**
+			- **`title`** 
+		- The default is by **`categoryUUID`**.
 	- **`limit-to`**
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
@@ -161,6 +173,11 @@ This will return the list of sections of products. Products grouped by sections 
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
+		- This will arrange the results based on the given value.
+		- Possible values are:
+			- **`name`**
+			- **`title`** 
+		- The default is by **`sectionUUID`**.
 	- **`limit-to`**
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
@@ -217,6 +234,11 @@ This will return the list of products grouped according to the price range. Note
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
+		- This will arrange the results based on the given value.
+		- Possible values are:
+			- **`minimum-price`**
+			- **`maximum-price`** 
+		- The default is by **`minimumPrice`**.
 	- **`limit-to`**
 	- **`range`**
 		- This can be an array of ranges in this format: `12.50-100.45,10.45-30.55`...
@@ -227,10 +249,10 @@ This will return the list of products grouped according to the price range. Note
 	- **`wrap-as`**
 		- This can change the format of the response depending on how you will wrap the values.
 		- Possible values are:
-			- product
-			- category
-			- section
-			- store
+			- **`product`**
+			- **`category`**
+			- **`section`**
+			- **`store`**
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
 	- **`sessionID`**
@@ -594,6 +616,12 @@ This will return the list of products grouped according to the grocery store onl
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
+		- This will arrange the results based on the given value.
+		- Possible values are:
+			- **`name`**
+			- **`title`** 
+			- **`address`**
+		- The default is by **`storeUUID`**.
 	- **`limit-to`**
 	- **`location`**
 		- This the geo-location in the format of latitude, longitude. Example: `67.08765,56.7654`
@@ -707,12 +735,17 @@ This will return the list of products grouped according to the category of the p
 - MIME Type: **`application/json`*
 - Accepted Request Query Parameters:
 	- **`order-by`**
+		- This will arrange the results based on the given value.
+		- Possible values are:
+			- **`name`**
+			- **`title`** 
+		- The default is by **`categoryUUID`**.
 	- **`limit-to`**
 	- **`wrap-as`**
 		- This can change the format of the response depending on how you will wrap the values.
-			- Possible values are:
-				- store
-				- section
+		- Possible values are:
+			- **`store`**
+			- **`section`**
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
 	- **`sessionID`**
@@ -816,12 +849,17 @@ This will return the list of products grouped according to the section or usage 
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
 	- **`order-by`**
+		- This will arrange the results based on the given value.
+		- Possible values are:
+			- **`name`**
+			- **`title`** 
+		- The default is by **`sectionUUID`**.
 	- **`limit-to`**
 	- **`wrap-as`**
 		- This can change the format of the response depending on how you will wrap the values.
-			- Possible values are:
-				- store
-				- category
+		- Possible values are:
+			- **`store`**
+			- **`category`**
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
 	- **`sessionID`**
@@ -1214,14 +1252,168 @@ This will return the value of the given property in the complete store informati
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/store-name/store-data-property`**
+- Path: **`/transaction-id/get/store/store-name/store-data-property`**
 - MIME Type: **`application/json`** 
 - Accepted Request Query Parameters:
-	- **`order-by`**
-	- **`limit-to`**
 	- **`location`**
 		- This the geo-location in the format of latitude, longitude. Example: `67.08765,56.7654`
 		- Usually, we would rather use the current `geoLocation` parameter handed over so this is optional unless the user wanted a specific location.
+- Accepted Request Body Parameters:
+	- **`geoLocation`**
+	- **`sessionID`**
+	- **`requestTimestamp`**
+
+**Response Format**
+
+*On normal response*:
+
+- Response code: **`200`**
+- Response body:
+
+		{
+			"status": "success"|"failed",
+			"result": [
+		        
+		        ...
+			] | null
+		}
+
+*On server error response*:
+
+- Response code: **`404/500`**
+- Response body: *none*
+<br/><br/>
+
+
+###`/get/group/group-name`
+This will return the complete information of the group with the given name.
+
+**Request Format**
+
+- Method: **`GET`**
+- Host: **`data.grocerybox.com`**
+- Port: 
+- Protocol: **`HTTPS`**
+- Encoding: **`UTF8`**
+- Path: **`/transaction-id/get/group/group-name`**
+- MIME Type: **`application/json`** 
+- Accepted Request Body Parameters:
+	- **`geoLocation`**
+	- **`sessionID`**
+	- **`requestTimestamp`**
+
+**Response Format**
+
+*On normal response*:
+
+- Response code: **`200`**
+- Response body:
+
+		{
+			"status": "success"|"failed",
+			"result": [
+		        
+		        ...
+			] | null
+		}
+
+*On server error response*:
+
+- Response code: **`404/500`**
+- Response body: *none*
+<br/><br/>
+
+
+###`/get/group/group-name/group-data-property`
+This will return the value of the given property in the complete group information.
+
+**Request Format**
+
+- Method: **`GET`**
+- Host: **`data.grocerybox.com`**
+- Port: 
+- Protocol: **`HTTPS`**
+- Encoding: **`UTF8`**
+- Path: **`/transaction-id/get/group/group-name/group-data-property`**
+- MIME Type: **`application/json`** 
+- Accepted Request Body Parameters:
+	- **`geoLocation`**
+	- **`sessionID`**
+	- **`requestTimestamp`**
+
+**Response Format**
+
+*On normal response*:
+
+- Response code: **`200`**
+- Response body:
+
+		{
+			"status": "success"|"failed",
+			"result": [
+		        
+		        ...
+			] | null
+		}
+
+*On server error response*:
+
+- Response code: **`404/500`**
+- Response body: *none*
+<br/><br/>
+
+
+###`/get/section/section-name`
+This will return the complete information of the section with the given name.
+
+**Request Format**
+
+- Method: **`GET`**
+- Host: **`data.grocerybox.com`**
+- Port: 
+- Protocol: **`HTTPS`**
+- Encoding: **`UTF8`**
+- Path: **`/transaction-id/get/section/section-name`**
+- MIME Type: **`application/json`** 
+- Accepted Request Body Parameters:
+	- **`geoLocation`**
+	- **`sessionID`**
+	- **`requestTimestamp`**
+
+**Response Format**
+
+*On normal response*:
+
+- Response code: **`200`**
+- Response body:
+
+		{
+			"status": "success"|"failed",
+			"result": [
+		        
+		        ...
+			] | null
+		}
+
+*On server error response*:
+
+- Response code: **`404/500`**
+- Response body: *none*
+<br/><br/>
+
+
+###`/get/section/section-name/section-data-property`
+This will return the value of the given property in the complete section information.
+
+**Request Format**
+
+- Method: **`GET`**
+- Host: **`data.grocerybox.com`**
+- Port: 
+- Protocol: **`HTTPS`**
+- Encoding: **`UTF8`**
+- Path: **`/transaction-id/get/section/section-name/section-data-property`**
+- MIME Type: **`application/json`** 
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
 	- **`sessionID`**
