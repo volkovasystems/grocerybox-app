@@ -36,6 +36,13 @@ The transaction ID will act as a gateway thus this will prevent unwanted request
 ##Draft REST API Specifications
 The REST API follows a transactional based command endpoints. The endpoints are designed like a functional call with the request parameters acting like function parameters. This pattern ensures that the endpoints follows separation of concern and modularity principles.
 
+> **Note about reading the specification.**
+> 
+> - By practice we will be using lowercase for query parameters and camelcase for request body parameters.
+> - All request body parameters should be in JSON format.
+> - A response code of **`404`** means the server encounters an error but does not crash. A response code of **`500`** means the server encounters an error and crashes.
+> - Response format will always follow strict structure and should only contain two properties, **`status`** and **`results`**. **`status`** should only have two values, **`"success"`** or **`"failed"`**
+
 ###`/get/group/all`
 This will return the list of groups of products.
 
@@ -118,6 +125,13 @@ This will return the list of categories of products.
 			- **`title`** 
 		- The default is by **`categoryUUID`**.
 	- **`limit-to`**
+		- Limits the result based on the given value.
+		- Minimum of **`1`** and maximum of **`10`**.
+		- The default limit is **`10`**.
+	- **`go-to-page`**
+		- Combined together with **`limitTo`**.
+		- Sets the current page of the results.
+		- Page will start at **`1`** and end at **`Math.floor(1/N)`** where **`N`** is the maximum number of category in the database.
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
 	- **`sessionID`**
@@ -1439,3 +1453,82 @@ This will return the value of the given property in the complete section informa
 - Response code: **`404/500`**
 - Response body: *none*
 <br/><br/>
+
+
+###`/get/user/user-uuid`
+This will return the complete information of the user with the given UUID.
+
+**Request Format**
+
+- Method: **`GET`**
+- Host: **`data.grocerybox.com`**
+- Port: 
+- Protocol: **`HTTPS`**
+- Encoding: **`UTF8`**
+- Path: **`/transaction-id/get/user/user-uuid`**
+- MIME Type: **`application/json`** 
+- Accepted Request Body Parameters:
+	- **`geoLocation`**
+	- **`sessionID`**
+	- **`requestTimestamp`**
+
+**Response Format**
+
+*On normal response*:
+
+- Response code: **`200`**
+- Response body:
+
+		{
+			"status": "success"|"failed",
+			"result": [
+		        
+		        ...
+			] | null
+		}
+
+*On server error response*:
+
+- Response code: **`404/500`**
+- Response body: *none*
+<br/><br/>
+
+
+###`/get/user/user-uuid/user-data-property`
+This will return the value of the given property in the complete user information.
+
+**Request Format**
+
+- Method: **`GET`**
+- Host: **`data.grocerybox.com`**
+- Port: 
+- Protocol: **`HTTPS`**
+- Encoding: **`UTF8`**
+- Path: **`/transaction-id/get/user/user-uuid/user-data-property`**
+- MIME Type: **`application/json`** 
+- Accepted Request Body Parameters:
+	- **`geoLocation`**
+	- **`sessionID`**
+	- **`requestTimestamp`**
+
+**Response Format**
+
+*On normal response*:
+
+- Response code: **`200`**
+- Response body:
+
+		{
+			"status": "success"|"failed",
+			"result": [
+		        
+		        ...
+			] | null
+		}
+
+*On server error response*:
+
+- Response code: **`404/500`**
+- Response body: *none*
+<br/><br/>
+
