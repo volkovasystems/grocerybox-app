@@ -64,9 +64,10 @@ This will return the list of groups of products.
 		- The default is by **`groupUUID`**.
 	- **`limit-to`**
 		- Limits the result based on the given value.
-		- Minimum of **`1`** and maximum of <strong>`N`</strong> where <strong>`N`</strong> is the maximum group items in the database.
+		- Minimum of <strong>`1`</strong> and maximum of <strong>`N`</strong> where <strong>`N`</strong> is the maximum group items in the database.
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
+		- This is needed for fast update of the user location. Every request, the client will append this information. This is treated optional but when the server identified that this is present in the request, the user location will be updated immediately.
 	- **`sessionID`**
 	- **`requestTimestamp`**
 
@@ -126,14 +127,15 @@ This will return the list of categories of products.
 		- The default is by **`categoryUUID`**.
 	- **`limit-to`**
 		- Limits the result based on the given value.
-		- Minimum of **`1`** and maximum of **`10`**.
-		- The default limit is **`10`**.
+		- Minimum of <strong>`1`</strong> and maximum of <strong>`10`</strong>.
+		- The default limit is **`20`**.
 	- **`go-to-page`**
 		- Combined together with **`limitTo`**.
 		- Sets the current page of the results.
-		- Page will start at **`1`** and end at <strong>`Math.floor(1/N)`</strong> where <strong>`N`</strong> is the maximum number of category in the database.
+		- Page will start at <strong>`1`</strong> and end at <strong>`Math.floor(1/N)`</strong> where <strong>`N`</strong> is the maximum number of category in the database.
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
+		- This is needed for fast update of the user location. Every request, the client will append this information. This is treated optional but when the server identified that this is present in the request, the user location will be updated immediately.
 	- **`sessionID`**
 	- **`requestTimestamp`**
 
@@ -193,8 +195,12 @@ This will return the list of sections of products. Products grouped by sections 
 			- **`title`** 
 		- The default is by **`sectionUUID`**.
 	- **`limit-to`**
+		- Limits the result based on the given value.
+		- Minimum of <strong>`1`</strong> and maximum of <strong>`10`</strong>.
+		- The default limit is **`20`**.
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
+		- This is needed for fast update of the user location. Every request, the client will append this information. This is treated optional but when the server identified that this is present in the request, the user location will be updated immediately.
 	- **`sessionID`**
 	- **`requestTimestamp`**
 
@@ -254,6 +260,9 @@ This will return the list of products grouped according to the price range. Note
 			- **`maximum-price`** 
 		- The default is by **`minimumPrice`**.
 	- **`limit-to`**
+		- Limits the result based on the given value.
+		- Minimum of <strong>`1`</strong> and maximum of <strong>`10`</strong>.
+		- The default limit is **`20`**.
 	- **`range`**
 		- This can be an array of ranges in this format: `12.50-100.45,10.45-30.55`...
 	- **`from`**
@@ -269,6 +278,7 @@ This will return the list of products grouped according to the price range. Note
 			- **`store`**
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
+		- This is needed for fast update of the user location. Every request, the client will append this information. This is treated optional but when the server identified that this is present in the request, the user location will be updated immediately.
 	- **`sessionID`**
 	- **`requestTimestamp`**
 	- **`range`**
@@ -613,9 +623,6 @@ This will return the list of products grouped according to the price range. Note
 - Response body: *none*
 <br/><br/>
 
-#NEEDS SLEEP :(
-##WORK IN PROGRESS BEYOND THIS POINT...
-
 ###`/get/group/by/store`
 This will return the list of products grouped according to the grocery store only (excluding the location of the store). Note that this requires a near-location parameter.
 
@@ -637,6 +644,9 @@ This will return the list of products grouped according to the grocery store onl
 			- **`address`**
 		- The default is by **`storeUUID`**.
 	- **`limit-to`**
+		- Limits the result based on the given value.
+		- Minimum of <strong>`1`</strong> and maximum of <strong>`10`</strong>.
+		- The default limit is **`20`**.
 	- **`location`**
 		- This the geo-location in the format of latitude, longitude. Example: `67.08765,56.7654`
 		- Usually, we would rather use the current `geoLocation` parameter handed over so this is optional unless the user wanted a specific location.
@@ -647,6 +657,7 @@ This will return the list of products grouped according to the grocery store onl
 				- section
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
+		- This is needed for fast update of the user location. Every request, the client will append this information. This is treated optional but when the server identified that this is present in the request, the user location will be updated immediately.
 	- **`sessionID`**
 	- **`requestTimestamp`**
 
@@ -755,6 +766,9 @@ This will return the list of products grouped according to the category of the p
 			- **`title`** 
 		- The default is by **`categoryUUID`**.
 	- **`limit-to`**
+		- Limits the result based on the given value.
+		- Minimum of <strong>`1`</strong> and maximum of <strong>`10`</strong>.
+		- The default limit is **`20`**.
 	- **`wrap-as`**
 		- This can change the format of the response depending on how you will wrap the values.
 		- Possible values are:
@@ -869,6 +883,9 @@ This will return the list of products grouped according to the section or usage 
 			- **`title`** 
 		- The default is by **`sectionUUID`**.
 	- **`limit-to`**
+		- Limits the result based on the given value.
+		- Minimum of <strong>`1`</strong> and maximum of <strong>`10`</strong>.
+		- The default limit is **`20`**.
 	- **`wrap-as`**
 		- This can change the format of the response depending on how you will wrap the values.
 		- Possible values are:
@@ -1338,7 +1355,7 @@ This will return the complete information of the group with the given name.
 <br/><br/>
 
 
-###`/get/group/group-name/group-data-property`
+###`/get/group/:group-name/:group-data-property`
 This will return the value of the given property in the complete group information.
 
 **Request Format**
@@ -1348,7 +1365,7 @@ This will return the value of the given property in the complete group informati
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/group/group-name/group-data-property`**
+- Path: **`/:transaction-id/get/group/:group-name/:group-data-property`**
 - MIME Type: **`application/json`** 
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
@@ -1377,7 +1394,7 @@ This will return the value of the given property in the complete group informati
 <br/><br/>
 
 
-###`/get/section/section-name`
+###`/get/section/:section-name`
 This will return the complete information of the section with the given name.
 
 **Request Format**
@@ -1387,7 +1404,7 @@ This will return the complete information of the section with the given name.
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/section/section-name`**
+- Path: **`/:transaction-id/get/section/:section-name`**
 - MIME Type: **`application/json`** 
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
@@ -1416,7 +1433,7 @@ This will return the complete information of the section with the given name.
 <br/><br/>
 
 
-###`/get/section/section-name/section-data-property`
+###`/get/section/:section-name/:section-data-property`
 This will return the value of the given property in the complete section information.
 
 **Request Format**
@@ -1426,7 +1443,7 @@ This will return the value of the given property in the complete section informa
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/section/section-name/section-data-property`**
+- Path: **`/:transaction-id/get/section/:section-name/:section-data-property`**
 - MIME Type: **`application/json`** 
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
@@ -1455,7 +1472,7 @@ This will return the value of the given property in the complete section informa
 <br/><br/>
 
 
-###`/get/user/user-uuid`
+###`/get/user/:user-uuid`
 This will return the complete information of the user with the given UUID.
 
 **Request Format**
@@ -1465,7 +1482,7 @@ This will return the complete information of the user with the given UUID.
 - Port: 
 - Protocol: **`HTTPS`**
 - Encoding: **`UTF8`**
-- Path: **`/transaction-id/get/user/user-uuid`**
+- Path: **`/:transaction-id/get/user/:user-uuid`**
 - MIME Type: **`application/json`** 
 - Accepted Request Body Parameters:
 	- **`geoLocation`**
@@ -1494,7 +1511,7 @@ This will return the complete information of the user with the given UUID.
 <br/><br/>
 
 
-###`/get/user/user-uuid/user-data-property`
+###`/get/user/:user-uuid/:user-data-property`
 This will return the value of the given property in the complete user information.
 
 **Request Format**
